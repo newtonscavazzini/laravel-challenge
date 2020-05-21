@@ -1,7 +1,14 @@
-<h1>Join the {{$event->title}} event.</h1>
-<p>{{$owner}} is inviting you to join the event called: <b>{{$event->title}}</b></p>
+@component('mail::message')
+# Join {{$event->title}}!
 
-<a href="{{$joinUrl}}">{{$joinUrl}}</a>
+{{$owner}} is inviting you to join the event called '**{{$event->title}}**'
 
-<p>You may create an account if you do not already have an one.</p>
-<p>Bye.</p>
+You may create an account if you do not already have one.
+
+@component('mail::button', ['url' => $joinUrl])
+Accept Invite
+@endcomponent
+
+Thanks.
+
+@endcomponent

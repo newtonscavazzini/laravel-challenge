@@ -37,8 +37,8 @@ class InviteParticipant extends Mailable
     public function build()
     {
         return $this
-            ->from('owcalendar@mail.com')
+            ->from('laravelchallenge@mail.com')
             ->subject("{$this->owner} is inviting you to {$this->event->title}")
-            ->view('emails.invite');
+            ->markdown('emails.invite');
     }
 }
