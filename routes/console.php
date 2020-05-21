@@ -1,6 +1,7 @@
 <?php
 
 use App\Event;
+use App\Jobs\NotifyUpcomingEvents;
 use App\Models\User;
 use Illuminate\Foundation\Inspiring;
 
@@ -35,3 +36,12 @@ Artisan::command('users:list', function () {
 Artisan::command('events:count', function () {
     $this->info(Event::count() . ' events created.');
 })->describe('Get number of created events.');
+
+Artisan::command('events:notify', function () {
+    if ($this->confirm('Are you sure you want to notify the users?')) {
+        NotifyUpcomingEvents::dispatch();
+    }
+    else {
+        $this->comment('Cancelled.');
+    }
+});
