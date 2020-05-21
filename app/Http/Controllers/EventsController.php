@@ -6,6 +6,7 @@ use App\Event;
 use App\Exceptions\EventCreationException;
 use App\Helpers\EventSerializer;
 use App\Helpers\EventUnserializer;
+use App\Jobs\SendInviteEmail;
 use App\Mail\InviteParticipant;
 use App\Models\User;
 use App\Repositories\EventRepository;
@@ -290,21 +291,11 @@ class EventsController extends Controller
                 ->withErrors($participant->name . '  is already a participant in this event.');
         }
 
-        $payload = array(
-            "iss" => "ow-calendar",
-            "iat" => Carbon::now()->timestamp,
-            'exp' => Carbon::now()->addDays(7)->timestamp,
-            'event' => $id,
-            'invited' => $email,
-        );
-
-        $token = JWT::encode($payload, env('APP_KEY'));
-
-        Mail::to($email)->send(new InviteParticipant($event, Auth::user()->name, $token));
+        SendInviteEmail::dispatch($event, Auth::user()->name, $email);
 
         return redirect()
             ->back()
-            ->with('success', "A e-mail with instructions has been sent to {$email}");
+            ->with('success', "An e-mail with instructions will be sent to {$email}.");
 
     }
 
