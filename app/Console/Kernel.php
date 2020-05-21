@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\NotifyUpcomingEvents;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -26,6 +27,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->job(new NotifyUpcomingEvents)
+            ->dailyAt('00:00');
     }
 
     /**
