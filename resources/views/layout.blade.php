@@ -17,71 +17,79 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/">OW Calendar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <div class="container">
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <nav  class="navbar header-navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/"><i class="fa fa-calendar"></i> OW Calendar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-            @if (Auth::check())
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item  {{ (request()->is('/')) ? 'active' : '' }}">
-                        <a class="nav-link" href="/">Dashboard</a>
-                    </li>
-                    <li class="nav-item {{ (request()->is('events/import-export')) ? 'active' : '' }}">
-                        <a class="nav-link" href="/events/import-export">Import / Export events</a>
-                    </li>
-                </ul>
+                @if (Auth::check())
 
-                <div class="d-flex">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item  {{ (request()->is('/')) ? 'active' : '' }}">
+                            <a class="nav-link" href="/">Dashboard</a>
+                        </li>
+                        <li class="nav-item {{ (request()->is('events/import-export')) ? 'active' : '' }}">
+                            <a class="nav-link" href="/events/import-export">Import & Export events</a>
+                        </li>
+                    </ul>
 
-                    <a href="/profile" title="Edit your profile" class="btn btn-sm btn-secondary" style="border-radius: 5px 0 0 5px;">
-                        <small>{{Auth::user()->name}}</small>
-                    </a>
+                    <div class="d-flex align-items-center">
 
-                    <form action="/logout" method="post">
-                        {{ csrf_field() }}
-                        <button title="Logout" class="btn btn-sm btn-danger"
-                                style="border-radius: 0 5px 5px 0;" type="submit">
-                            <i class="fa fa-sign-out"></i>
-                        </button>
-                    </form>
+                        <a href="/profile" title="Edit your profile" class="btn">
+                            <small><i class="fa fa-user-circle"></i> {{Auth::user()->name}}</small>
+                        </a>
 
+                        <form action="/logout" method="post">
+                            {{ csrf_field() }}
+                            <button title="Logout" class="btn btn-sm btn-danger"
+                                    style="border-radius: 5px;" type="submit">
+                                <i class="fa fa-sign-out"></i>
+                            </button>
+                        </form>
+
+                    </div>
+
+                @endif
+
+            </div>
+        </nav>
+
+        <ol class="breadcrumb header-breadcrumb">
+            @yield('breadcrumb')
+        </ol>
+
+        <div class="mb-3">
+
+            @if ($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-
             @endif
 
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+
+            @yield('content')
         </div>
-    </nav>
 
-    <div class="container mb-3">
-
-        @if ($errors->any())
-            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
-
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-                {{ session('success') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
-
-        @yield('content')
     </div>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

@@ -2,6 +2,11 @@
 
 @section('title', 'OW Calendar | All Events')
 
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{ url('/') }}">Dashboard</a></li>
+    <li class="breadcrumb-item active">Events</li>
+@endsection
+
 @section('content')
 <div class="card mt-3">
 

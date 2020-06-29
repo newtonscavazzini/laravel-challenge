@@ -1,5 +1,9 @@
 @extends('layout')
 
+@section('breadcrumb')
+    <li class="breadcrumb-item active">Password Reset</li>
+@endsection
+
 @section('content')
 
     @if (session('status'))

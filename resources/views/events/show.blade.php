@@ -8,6 +8,12 @@
     <link href="{{ URL::asset('css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" media="screen">
 @endsection
 
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{ url('/') }}">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/events') }}">Events</a></li>
+    <li class="breadcrumb-item active">{{$event->title}}</li>
+@endsection
+
 @section('content')
 
     <div class="card mt-3">

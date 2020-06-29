@@ -2,6 +2,10 @@
 
 @section('title', 'OW Calendar | Login')
 
+@section('breadcrumb')
+    <li class="breadcrumb-item active">Login</li>
+@endsection
+
 @section('content')
 <div class="card mt-3">
 

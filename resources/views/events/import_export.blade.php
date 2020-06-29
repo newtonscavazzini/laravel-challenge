@@ -2,12 +2,17 @@
 
 @section('title', 'OW Calendar | Import / Export events')
 
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{ url('/') }}">Dashboard</a></li>
+    <li class="breadcrumb-item active">Import & Export events</li>
+@endsection
+
 @section('content')
 
     <div class="card mt-3">
 
         <div class="card-header">
-            <span>Import / Export events</span>
+            <span>Import & Export events</span>
         </div>
 
         <div class="card-body row">

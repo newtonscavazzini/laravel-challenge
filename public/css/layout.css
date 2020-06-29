@@ -1,5 +1,5 @@
 body {
-    background-color: #67B7BF;
+    background-color: #eee;
 }
 
 input#inputFile[type="file"] {
@@ -24,4 +24,16 @@ input#inputFile[type="file"] {
 
 .custom-btn-file i {
     font-size: 35px;
+}
+
+.header-navbar {
+    border: 1px solid rgba(0,0,0,.125);
+    border-width: 0 1px 0;
+}
+
+.header-breadcrumb {
+    background: #FFFFFF;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 0 0 4px 4px;
+    border-top-style: dashed;
 }
