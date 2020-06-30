@@ -17,6 +17,34 @@ use Illuminate\Support\Facades\DB;
 class EventRepository
 {
 
+    public function getCalendar(int $days, int $userId)
+    {
+        $from = Carbon::today()->toDateString();
+        $to = Carbon::today()->addDays($days - 1)->toDateString();
+
+        $calendar = [];
+        for ($i = 0; $i < $days; $i++) {
+            $day = Carbon::today()->addDays($i);
+            $calendar[$day->toDateString()] = [
+                'date' => $day->toFormattedDateString(),
+                'events' => [],
+            ];
+        }
+
+        $events = $this->getEventsInRange($from, $to, $userId);
+        foreach ($events as $event) {
+            $day = Carbon::parse($event->start_at)->toDateString();
+
+            if (!isset($calendar[$day]['events'])) {
+                continue;
+            }
+
+            $calendar[$day]['events'][] = $event;
+        }
+
+        return $calendar;
+    }
+
     /**
      * @param Event|Event[] $events
      * @throws \InvalidArgumentException|EventCreationException

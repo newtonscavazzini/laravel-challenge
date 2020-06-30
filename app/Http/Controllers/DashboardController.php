@@ -19,12 +19,9 @@ class DashboardController extends Controller
 
     public function index()
     {
-
         return view('dashboard.index', [
-            'todayEvents' => $this->eventRepository->getTodayEvents(auth()->id()),
-            'next5DaysEvents' => $this->eventRepository->getNextDaysEvents(5, auth()->id()),
+            'calendar' => $this->eventRepository->getCalendar(6, auth()->id()),
         ]);
-
     }
 
 }
