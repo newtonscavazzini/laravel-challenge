@@ -13,6 +13,10 @@
 
 Route::get('/', 'DashboardController@index')->middleware('auth');
 
+Route::group(['prefix' => 'calendar', 'middleware' => 'auth'], function() {
+    Route::get('{month}/{year}', 'EventsController@monthEvents')->name('month_calendar');
+});
+
 Route::group(['prefix' => 'events', 'middleware' => 'auth'], function() {
 
     Route::get('', 'EventsController@index');

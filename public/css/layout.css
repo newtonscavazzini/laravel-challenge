@@ -37,3 +37,32 @@ input#inputFile[type="file"] {
     border-radius: 0 0 4px 4px;
     border-top-style: dashed;
 }
+
+#content-body {
+    min-height: 800px;
+}
+
+.events-navigation {
+    background: #EEE;
+    padding: 10px;
+    margin: -20px -20px 15px;
+}
+
+#events_list {
+    padding: 0 16px 0;
+}
+
+#current-month {
+    font-size: 0.8rem;
+}
+
+.btn-change-month {
+    width: 100px;
+    font-size: 0.8rem;
+}
+
+.event-item {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #333;
+}

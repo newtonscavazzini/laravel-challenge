@@ -30,12 +30,23 @@ class EventsController extends Controller
         $this->eventRepository = $eventRepository;
     }
 
-    public function index() {
+    public function monthEvents(int $month, int $year)
+    {
+        if (!is_int($month) || $month < 1 || $month > 12 || !is_int($year)) {
+            throw new \Exception();
+        }
 
+        return $this->eventRepository
+            ->getMonthCalendar($month, $year, auth()->id())
+            ->toJson();
+    }
+
+    public function index()
+    {
         return view('events.index', [
-            'events' => $this->eventRepository->getAllEvents(15),
+            'month' => date('n'),
+            'year' => date('Y'),
         ]);
-
     }
 
     public function create()

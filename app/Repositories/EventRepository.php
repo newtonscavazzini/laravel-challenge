@@ -4,6 +4,7 @@
 namespace App\Repositories;
 
 
+use App\Models\Calendar;
 use App\Event;
 use App\Exceptions\EventCreationException;
 use App\Models\User;
@@ -16,6 +17,36 @@ use Illuminate\Support\Facades\DB;
 
 class EventRepository
 {
+
+    public function getMonthCalendar(int $month, int $year, int $userId): Calendar
+    {
+        if ($month < 1 || $month > 12) throw new \Exception();
+
+        $from = Carbon::createFromDate($year, $month)->startOfMonth();
+        $to = Carbon::createFromDate($year, $month)->endOfMonth();
+
+        $calendar = [];
+        for ($i = 0; $i < $to->daysInMonth; $i++) {
+            $day = $from->copy()->addDays($i);
+            $calendar[$day->toDateString()] = [
+                'date' => $day->toFormattedDateString(),
+                'events' => [],
+            ];
+        }
+
+        $events = $this->getEventsInRange($from->toDateString(), $to->toDateString(), $userId);
+        foreach ($events as $event) {
+            $day = Carbon::parse($event->start_at)->toDateString();
+
+            if (!isset($calendar[$day]['events'])) {
+                continue;
+            }
+
+            $calendar[$day]['events'][] = $event;
+        }
+
+        return new Calendar($month, $year, $calendar);
+    }
 
     public function getCalendar(int $days, int $userId)
     {
